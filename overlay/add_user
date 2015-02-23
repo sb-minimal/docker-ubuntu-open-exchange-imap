@@ -1,0 +1,9 @@
+USERNAME=user
+USERDISPLAY=User
+USERSUR=A
+USERLAST=User
+USERPWD=test
+USEREMAIL=test@example.com
+USERLANG=en_US
+
+/opt/open-xchange/sbin/createuser -c 1 -A oxadmin -P $ADMIN_PASSWORD -u $USERNAME -d "$USERDISPLAY" -g $USERSUR -s $USERLAST -l $USERLANG -p $USERPWD -e $USEREMAIL --imaplogin $USEREMAIL --imapserver 10.77.1.5 --smtpserver 10.77.1.5
