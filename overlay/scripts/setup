@@ -45,6 +45,7 @@ apt-get upgrade -y --force-yes
 echo PATH=$PATH:/opt/open-xchange/sbin/ >> ~/.bashrc && . ~/.bashrc
 
 paxctl -Cm /usr/bin/java
+paxctl -Cm /usr/bin/nodejs
 
 chmod +x /ox.sh
 
