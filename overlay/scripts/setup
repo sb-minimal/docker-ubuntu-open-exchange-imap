@@ -1,5 +1,25 @@
 #!/bin/bash
 
+export DEBIAN_FRONTEND=noninteractive
+
+apt-get update -y --allow-unauthenticated
+apt-get upgrade -y --allow-unauthenticated
+
+apt-get install -y --allow-unauthenticated software-properties-common
+
+add-apt-repository ppa:webupd8team/java
+
+apt-get update -y --allow-unauthenticated
+apt-get upgrade -y --allow-unauthenticated
+
+
+echo debconf shared/accepted-oracle-license-v1-1 select true | \
+ debconf-set-selections
+echo debconf shared/accepted-oracle-license-v1-1 seen true | \
+ debconf-set-selections
+  
+apt-get install -y --allow-unauthenticated oracle-java8-installer 
+
 cat << EOF >> /etc/apt/sources.list.d/open-xchange.list
 
 deb http://software.open-xchange.com/products/appsuite/stable/appsuiteui/DebianWheezy/ /
@@ -7,8 +27,11 @@ deb http://software.open-xchange.com/products/appsuite/stable/backend/DebianWhee
 
 deb http://software.open-xchange.com/products/appsuite/stable/office/DebianWheezy /
 deb http://software.open-xchange.com/products/appsuite/stable/office-web/DebianWheezy /
-deb http://software.open-xchange.com/products/appsuite/stable/documentconverter-api/DebianWheezy /
-deb http://software.open-xchange.com/products/appsuite/stable/calcengine/DebianWheezy/ /
+#deb http://software.open-xchange.com/products/appsuite/stable/documentconverter-api/DebianWheezy /
+
+#deprecated: deb https://software.open-xchange.com/products/appsuite/stable/calcengine/DebianWheezy/ /
+#deb http://LDBUSER:LDBPASSWORD@software.open-xchange.com/products/appsuite/stable/readerengine/DebianWheezy/ /
+#deb https://software.open-xchange.com/products/appsuite/stable/documentconverter-api/DebianWheezy/ /
 
 # if you have a valid maintenance subscription, please uncomment the 
 # following and add the ldb account data to the url so that the most recent
@@ -21,11 +44,10 @@ EOF
 
 #mkdir -p /data/mysql
 #ln -s /data/mysql /var/lib/mysql
+apt-get update -y --allow-unauthenticated
+apt-get upgrade -y --allow-unauthenticated
 
-apt-get update -y --force-yes
-apt-get upgrade -y --force-yes
-
-apt-get install -y --force-yes open-xchange open-xchange-authentication-imap \
+apt-get install -y --allow-unauthenticated open-xchange open-xchange-authentication-imap \
   open-xchange-grizzly open-xchange-admin open-xchange-appsuite open-xchange-appsuite-backend open-xchange-appsuite-manifest \
   open-xchange-appsuite-l10n-de-de open-xchange-appsuite-l10n-en-us \
   open-xchange-caldav open-xchange-carddav open-xchange-webdav-directory \
@@ -36,11 +58,12 @@ apt-get install -y --force-yes open-xchange open-xchange-authentication-imap \
   open-xchange-mobile-config \
   open-xchange-passwordchange-database open-xchange-passwordchange-servlet \
   open-xchange-push-imapidle open-xchange-push-mailnotify \
-  open-xchange-documentconverter-api calcengine open-xchange-documents-backend open-xchange-documents-ui open-xchange-documents-ui-static \
   hunspell hunspell-de-de hunspell-en-us \
   paxctl netcat mysql-server
+  
+# readerengine open-xchange-documentconverter-api calcengine open-xchange-documents-backend open-xchange-documents-ui open-xchange-documents-ui-static \
 
-apt-get upgrade -y --force-yes
+apt-get upgrade -y --allow-unauthenticated
 
 echo PATH=$PATH:/opt/open-xchange/sbin/ >> ~/.bashrc && . ~/.bashrc
 
