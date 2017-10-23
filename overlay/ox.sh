@@ -58,7 +58,9 @@ if [ "$MYSQL_NEED_SETUP" = "yes" ]; then
 	mysqladmin -u root password `randpw`
 fi
 
-/etc/init.d/open-xchange start
+#/etc/init.d/open-xchange start
+/opt/open-xchange/sbin/triggerupdatethemes -u
+su -c /opt/open-xchange/sbin/open-xchange -s /bin/bash open-xchange
 sleep 10
 
 	#wait for open-xchange to get ready...
@@ -89,14 +91,14 @@ fi
 
 /etc/init.d/apache2 start
 
-trap '/etc/init.d/apache2 stop;/etc/init.d/open-xchange stop;/etc/init.d/mysql stop' TERM INT
+trap '/etc/init.d/apache2 stop;/opt/open-xchange/sbin/shutdown -w;/etc/init.d/mysql stop' TERM INT
 
 while sleep 10; do
-	echo ""
+	echo -n ""
 done
 
 /etc/init.d/apache2 stop
-/etc/init.d/open-xchange stop
+/opt/open-xchange/sbin/shutdown -w
 /etc/init.d/mysql stop
 
 sleep 30
