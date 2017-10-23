@@ -60,7 +60,7 @@ fi
 
 #/etc/init.d/open-xchange start
 /opt/open-xchange/sbin/triggerupdatethemes -u
-su -c /opt/open-xchange/sbin/open-xchange -s /bin/bash open-xchange
+su -c /opt/open-xchange/sbin/open-xchange -s /bin/bash open-xchange &
 sleep 10
 
 	#wait for open-xchange to get ready...
